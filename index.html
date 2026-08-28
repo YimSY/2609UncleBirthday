@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>The Birthday Cup: Squash Game 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="gameContainer">
+    <!-- Retro Arcade CRT Scanline Overlay -->
+    <div class="crt-overlay"></div>
+
+    <!-- Top Retro Arcade HUD -->
+    <header id="gameHUD">
+      <div class="hud-box hud-left">
+        <span id="hudLevel" class="hud-tag">LVL 1: VS AMY (NIECE)</span>
+        <span id="hudServerIndicator" class="hud-sub">● DAD SERVES</span>
+      </div>
+
+      <div class="hud-box hud-center scoreboard">
+        <div class="score-card">
+          <span class="score-label">DAD 🎂</span>
+          <span id="hudPlayerScore" class="score-digit">0</span>
+        </div>
+        <div class="score-divider">:</div>
+        <div class="score-card">
+          <span class="score-label">RIVAL</span>
+          <span id="hudOpponentScore" class="score-digit">0</span>
+        </div>
+      </div>
+
+      <div class="hud-box hud-right">
+        <button id="soundToggleBtn" class="hud-btn" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
+      </div>
+    </header>
+
+    <!-- Main Canvas for 16-Bit Graphics -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Mobile Touch Control Hint -->
+    <div id="touchGuideBar">
+      <span>👆 Tap & Hold / Drag to move • Tap / Space to Smash</span>
+    </div>
+
+    <!-- 1. TITLE SCREEN OVERLAY -->
+    <div id="titleScreen" class="overlay-screen active">
+      <div class="arcade-card title-card">
+        <div class="retro-badge">★ 16-BIT ANIME SQUASH ARCADE ★</div>
+        <h1 class="game-title">
+          <span class="title-jp">バースデー・カップ</span>
+          <span class="title-en">THE BIRTHDAY CUP</span>
+          <span class="title-sub">SQUASH CHAMPIONSHIP</span>
+        </h1>
+
+        <div class="story-box">
+          <p class="story-p">🎂 <strong>It's Dad's Birthday!</strong></p>
+          <p class="story-p">To win the legendary Birthday Cup, Dad must conquer 3 family squash matches!</p>
+          <div class="roster-grid">
+            <div class="roster-card">
+              <span class="roster-lvl">LVL 1</span>
+              <span class="roster-name">Niece Amy</span>
+              <span class="roster-desc">Easy</span>
+            </div>
+            <div class="roster-card">
+              <span class="roster-lvl">LVL 2</span>
+              <span class="roster-name">Wife Chris</span>
+              <span class="roster-desc">Medium</span>
+            </div>
+            <div class="roster-card">
+              <span class="roster-lvl">LVL 3</span>
+              <span class="roster-name">Daughter Kaitlyn</span>
+              <span class="roster-desc">Hard</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-summary">
+          <span>🏆 First to <strong>11 points</strong> (lead by 2). Front wall & 1 floor bounce rule!</span>
+        </div>
+
+        <button id="startBtn" class="arcade-btn pulse-anim">
+          ▶ START TOURNAMENT
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. LEVEL INTRO MODAL -->
+    <div id="levelIntroModal" class="overlay-screen hidden">
+      <div class="arcade-card">
+        <div id="introLevelTag" class="retro-badge">LEVEL 1 OF 3</div>
+        <h2 id="introOpponentName" class="modal-title">VS NIECE (AMY)</h2>
+        <div id="introOpponentDesc" class="opponent-meta">Difficulty: Easy</div>
+
+        <div class="quote-bubble">
+          <p id="introDialogueText">"Happy Birthday Uncle! It's Amy! Let's see who takes home the Birthday Cup!"</p>
+        </div>
+
+        <div class="controls-reminder">
+          <span>📱 <strong>Controls:</strong> Drag character left/right to hit ball. First to 11 points wins!</span>
+        </div>
+
+        <button id="readyServeBtn" class="arcade-btn">
+          🎾 READY TO PLAY!
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. LEVEL CLEAR MODAL -->
+    <div id="levelClearModal" class="overlay-screen hidden">
+      <div class="arcade-card win-card">
+        <div class="retro-badge win-badge">★ MATCH WON! ★</div>
+        <h2 id="clearLevelTitle" class="modal-title">LEVEL 1 CLEAR!</h2>
+        <p id="clearScoreSummary" class="score-summary-text">Dad 11 - 8 Niece (Amy)</p>
+
+        <div class="quote-bubble">
+          <p id="clearQuote">"Whoa Uncle, you're on fire! Auntie Chris is waiting for you next!"</p>
+        </div>
+
+        <button id="nextLevelBtn" class="arcade-btn next-btn">
+          NEXT: VS WIFE (CHRIS) ➔
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. GAME OVER / LOSS MODAL (Sad Dad & Niece Amy) -->
+    <div id="gameOverModal" class="overlay-screen hidden">
+      <div class="arcade-card loss-card">
+        <div class="retro-badge loss-badge">★ TRY AGAIN ★</div>
+        <h2 class="modal-title loss-title">MATCH DEFEAT...</h2>
+        <p id="lossScoreSummary" class="score-summary-text">Dad 8 - 11 Opponent</p>
+
+        <div class="sad-scene">
+          <div class="sad-illustration">
+            <span class="sad-icon">😢</span>
+            <span class="sad-spark">💧</span>
+            <span class="sad-icon">👧</span>
+          </div>
+          <div class="quote-bubble loss-bubble">
+            <p id="lossNieceQuote">"Uncle, Happy Birthday! Don't be sad, Amy is ready for a rematch anytime!"</p>
+          </div>
+        </div>
+
+        <button id="retryBtn" class="arcade-btn retry-btn">
+          🔄 REMATCH / TRY AGAIN
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. GRAND BIRTHDAY FINALE MODAL -->
+    <div id="grandFinaleModal" class="overlay-screen hidden">
+      <div class="arcade-card grand-card">
+        <div class="retro-badge grand-badge">🎂 THE BIRTHDAY CHAMPION! 🎂</div>
+        <div class="trophy-icon">🏆</div>
+        <h1 class="grand-title">
+          <span class="grand-glow">HAPPY BIRTHDAY!</span>
+          <span class="grand-jp">お誕生日おめでとう！</span>
+        </h1>
+        <p id="finaleScoreSummary" class="score-summary-text">Dad 11 - 9 Daughter (Kaitlyn)</p>
+
+        <div class="family-cheer-box">
+          <p class="cheer-p">🎉 <strong>Niece Amy:</strong> "Uncle is the greatest! Happy Birthday!"</p>
+          <p class="cheer-p">❤️ <strong>Wife Chris:</strong> "Happy Birthday darling! You're amazing!"</p>
+          <p class="cheer-p">🌟 <strong>Daughter Kaitlyn:</strong> "Dad, you're the true Squash Legend!"</p>
+        </div>
+
+        <div class="birthday-music-note">
+          🎵 <em>Playing 16-Bit Happy Birthday Chiptune Melody...</em>
+        </div>
+
+        <button id="playAgainBtn" class="arcade-btn grand-btn">
+          ★ PLAY TOURNAMENT AGAIN ★
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
