@@ -263,7 +263,7 @@ class BirthdaySquashGame {
     // Base speed scaled according to level difficulty
     let baseSpeed = 9.0; // Level 1 (Gentle & easy to follow)
     if (this.currentLevel === 2) baseSpeed = 11.2;
-    if (this.currentLevel === 3) baseSpeed = 13.5;
+    if (this.currentLevel === 3) baseSpeed = 12.0; 
 
     const targetZ = isServe ? 2.4 : (2.0 + Math.random() * 0.8);
     const power = isServe ? 1.0 : 1.05;
