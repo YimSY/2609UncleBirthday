@@ -24,7 +24,7 @@ class OpponentAI {
     this.level = level;
     switch (level) {
       case 1:
-        this.name = 'Niece (Amy)';
+        this.name = 'Amy';
         this.role = 'niece';
         this.difficulty = 'Easy';
         this.speed = 4.8;
@@ -33,7 +33,7 @@ class OpponentAI {
         this.powerRange = [0.88, 0.96];
         this.missChance = 0.30;    // 30% miss chance
         this.dialogues = {
-          intro: "Happy Birthday Uncle! 🎉 It's Amy! Let's see who takes home the Birthday Cup!",
+          intro: "Happy Birthday Uncle! It's Amy! Let's see who takes home the Birthday Cup!",
           pointScored: "Gotcha! Hehe, don't worry Uncle, you've got this!",
           pointConceded: "Ah! Super nice shot, Uncle!",
           win: "Uncle, Happy Birthday! Don't be sad, Amy is ready for a rematch anytime!",
@@ -42,7 +42,7 @@ class OpponentAI {
         break;
 
       case 2:
-        this.name = 'Wife (Chris)';
+        this.name = 'Chris';
         this.role = 'wife';
         this.difficulty = 'Medium';
         this.speed = 6.2;
@@ -59,16 +59,18 @@ class OpponentAI {
         };
         break;
 
-      case 3:
-      default:
-        this.name = 'Daughter (Kaitlyn)';
-        this.role = 'daughter';
-        this.difficulty = 'Hard';
-        this.speed = 7.6;
-        this.reach = 2.1;
-        this.baseSpeed = 13.5;     // Fast pace
-        this.powerRange = [1.20, 1.45];
-        this.missChance = 0.10;    // 10% miss chance
+        case 3:
+
+    default:
+  this.name = 'Kaitlyn';
+  this.role = 'daughter';
+  this.difficulty = 'Hard';
+  this.speed = 7.2;
+  this.reach = 2.0;
+  this.baseSpeed = 11.8;     // Reduced from 13.5 m/s to 11.8 m/s for a smoother, more playable pace
+  this.powerRange = [1.05, 1.25]; // Reduced from [1.20, 1.45]
+  this.missChance = 0.15;    // Changed to 15% miss rate (0.15)
+
         this.dialogues = {
           intro: "Happy Birthday Dad! 🎂 Kaitlyn is here to defend the varsity title! Let's play!",
           pointScored: "Too fast for you, Dad? Haha!",
